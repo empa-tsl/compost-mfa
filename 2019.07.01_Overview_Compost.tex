@@ -1,0 +1,171 @@
+\input{header}
+
+\begin{tikzpicture}[
+		comp/.style ={rectangle,fill = white, draw=black, text width = 4 cm, text centered, minimum height=3.5cm, font=\LARGE},
+		compMP/.style ={rectangle,fill = black!10!red!10, draw=black, text width = 3 cm, text centered, minimum height=0.8cm, yshift=-1cm},
+		flow/.style  ={-stealth, line width = 4, rounded corners=8mm, draw=mygreen},
+		flow1/.style  ={flow, draw = mybrown},
+		flow2/.style  ={flow, draw = myleaf},
+		flow3/.style  ={flow, draw = myolive},
+		flow4/.style  ={flow, draw = black!40},
+		flow5/.style  ={flow, draw = black!20},
+		labs/.style   ={rectangle, rounded corners, fill = mygreen!15, draw=black ,text centered, line width = 1, text width = 1.65 cm},
+		labs1/.style  ={labs, fill = mybrown!15},
+		labs2/.style  ={labs, fill = myleaf!15},
+		labs3/.style  ={labs, fill = myolive!15},
+		labs4/.style  ={labs, fill = black!5},
+		labs5/.style  ={labs, fill = white}]
+
+% figure size
+\draw[draw = white] (-5,13.5) rectangle ++(35.8,-23) {};
+
+% system boundary
+\draw[draw = black!15, line width = 2 mm, rounded corners] (-4,-6.5) rectangle ++(32,17) {};
+\node[font=\LARGE,text=black!50](title) at (3,11){\textbf{\textit{Organic matter treatment in Switzerland}}};
+\node[font=\Large,text=black!50](title) at (-.7,10){\textbf{\textit{All masses in tonnes}}};
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% COMPARTMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\node[comp] (coll) at (0,2)   {Organic waste collection} ;
+
+\node[comp] (ad)   at (9,8)  {Anaerobic digestion (AD)} ;
+\node[comp] (comp) at (9,4)  {Composting} ;
+\node[comp] (win)  at (9,0)  {Windrows} ;
+\node[comp] (cod)  at (9,-4) {Codigestion} ;
+
+\node[comp, minimum height=1.5cm, font=\Large] (loss)  at (9,-8) {Losses during transfer} ;
+
+\node[comp] (ad2)   at (18,8)  {Digestate produced from AD} ;
+\node[comp] (comp2) at (18,4)  {Compost produced from composting} ;
+\node[comp] (win2)  at (18,0)  {Compost produced from windrows} ;
+\node[comp] (cod2)  at (18,-4) {Digestate produced from codigestion} ;
+
+\node[comp, minimum height=1.5cm, font=\Large] (res)  at (18,-8) {Sorting residues} ;
+\node[comp, minimum height=1.5cm, font=\Large] (inc)  at (25,-8) {Incineration} ;
+\node[comp, minimum height=1.5cm, font=\Large] (oth)  at (18,12) {Other products} ;
+
+\node[comp] (agri)  at (28,6.8)  {Agriculture} ;
+\node[comp] (horti) at (28,2)  {Horticulture and landscaping} ;
+\node[comp] (priv)  at (28,-2.8) {Private customers} ;
+
+\node[text=mybrown!50!black] (text) at ([shift={(0,-1.4)}]agri)  {252'000 $\pm$ 36'000};
+\node[text=myleaf!60!black] (text) at ([shift={(0,-1.4)}]horti) {108'000 $\pm$ 17'000};
+\node[text=myolive!70!black] (text) at ([shift={(0,-1.4)}]priv)  {23'600 $\pm$ 4'000};
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% PATHWAYS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% INFLOW
+
+\draw[flow, line width = 1.2cm,-{Triangle[length=.7cm,width=1.2cm]}]
+	([shift={(-3,0)}]coll.west) -- (coll.west)
+	node[labs, pos = .4, text width = 1.75 cm] {1'256'000 $\pm$ 68'000};
+
+\draw[flow, line width = .48cm,-{Triangle[length=.7cm,width=.48cm]}]
+	(coll.east) -- ++(1.5,0) |- (ad.west)
+	node[labs, pos = .75] {487'000 $\pm$ 33'000};
+\draw[flow, line width = .52cm, -{Triangle[length=.7cm,width=.52cm]}]
+	(coll.east) -- ++(1.5,0) |- (comp.west)
+	node[labs, pos = .75] {527'000 $\pm$ 35'000};
+\draw[flow, line width = .1cm]
+	(coll.east) -- ++(1.5,0) |- (win.west)
+	node[labs, pos = .75] {99'200 $\pm$ 7'300};
+\draw[flow, line width = .13cm]
+	(coll.east) -- ++(1.5,0) |- (cod.west)
+	node[labs, pos = .75] {138'000 $\pm$ 11'000};
+\draw[flow, line width = .05cm]
+	(coll.east) -- ++(1.5,0) |- (loss.west)
+	node[labs, pos = .75] {3'770 $\pm$ 320};
+
+\draw[flow5, line width = .39cm, ,-{Triangle[length=.7cm,width=.39cm]}]
+	([shift={(0,1.2)}]ad.east)   -- ++(3.5,0)
+	node[labs5, pos = .35] {392'000 $\pm$ 45'000}
+	|- (oth.west);
+\draw[flow5, line width = .25cm]
+	([shift={(0,1.2)}]comp.east) -- ++(3.5,0)
+	node[labs5, pos = .35] {258'000 $\pm$ 64'000}
+	 |- (oth.west);
+\draw[flow5, line width = .1cm]
+	([shift={(0,1.2)}]win.east)  -- ++(3.5,0)
+	node[labs5, pos = .35] {43'000 $\pm$ 13'000}
+	 |- (oth.west);
+\draw[flow5, line width = .13cm]
+	([shift={(0,1.2)}]cod.east)  -- ++(3.5,0)
+	node[labs5, pos = .35] {132'000 $\pm$ 10'000}
+	|- (oth.west);
+
+\draw[flow4, line width = .1cm]
+	([shift={(0,-1.2)}]ad.east)   -- ++(2.5,0)
+	node[labs4, pos = .5] {29'000 $\pm$ 29'000}
+	|- (res.west);
+\draw[flow4, line width = .1cm]
+	([shift={(0,-1.2)}]comp.east) -- ++(2.5,0)
+	node[labs4, pos = .5] {10'500 $\pm$ 4'800}
+	|- (res.west);
+\draw[flow4, line width = .05cm] ([shift={(0,-1.2)}]win.east)  -- ++(2.5,0)
+	node[labs4, pos = .5] {2'000 $\pm$ 900}
+	|- (res.west);
+\draw[flow4, line width = .05cm] ([shift={(0,-1.2)}]cod.east)  -- ++(2.5,0)
+	node[labs4, pos = .5] {2'800 $\pm$ 1'300}
+	|- (res.west);
+
+\draw[flow4, line width = .1cm]
+	(res.east) -- (inc.west)
+	node[labs4, pos = .4] {45'000 $\pm$ 30'000};
+
+\draw[flow, line width = .1cm] (ad)   -- (ad2)
+	node[labs, pos = .26] {66'000 $\pm$ 13'000};
+\draw[flow, line width = .26cm] (comp) -- (comp2)
+	node[labs, pos = .26] {259'000 $\pm$ 54'000};
+\draw[flow, line width = .1cm] (win)  -- (win2)
+	node[labs, pos = .26] {55'000 $\pm$ 11'000};
+\draw[flow, line width = .05cm] (cod)  -- (cod2)
+	node[labs, pos = .26] {3'760 $\pm$ 750};
+
+\draw[flow1, line width = .1cm] ([shift={(0,-1.2)}]ad2.east) -- (agri.west)
+	node[labs1, pos = .22] {39'100 $\pm$ 7'900};
+\draw[flow1, line width = .16cm] ([shift={(0,-1.2)}]comp2.east) -- ++(2.5,0)
+	node[labs1, pos = .5] {163'000 $\pm$ 34'000}
+	|- (agri.west);
+\draw[flow1, line width = .2cm] ([shift={(0, 1.2)}]win2.east) -- ++(2.5,0)
+	node[labs1, pos = .5] {49'000 $\pm$ 10'000}
+	|- (agri.west);
+\draw[flow1, line width = .05cm] ([shift={(0, 1.2)}]cod2.east) -- ++(2.5,0)
+	node[labs1, pos = .5] {413 $\pm$ 85}
+	|- (agri.west);
+
+\draw[flow2, line width = .2cm] ([shift={(0, 0)}]ad2.east)   -- ++(3.5,0)
+	node[labs2, pos = .35] {22'500 $\pm$ 4'600}
+	|- (horti.west);
+\draw[flow2, line width = .1cm] ([shift={(0, 0)}]comp2.east) -- ++(3.5,0)
+	node[labs2, pos = .35] {78'000 $\pm$ 17'000}
+	|- (horti.west);
+\draw[flow2, line width = .05cm] ([shift={(0, 0)}]win2.east)  -- ++(3.5,0)
+	node[labs2, pos = .35] {4'900 $\pm$ 1'100}
+	|- (horti.west);
+\draw[flow2, line width = .05cm] ([shift={(0, 0)}]cod2.east)  -- ++(3.5,0)
+	node[labs2, pos = .35] {3'080 $\pm$ 610}
+	|- (horti.west);
+
+\draw[flow3, line width = .05cm] ([shift={(0, 1.2)}]ad2.east)   -- ++(4.5,0)
+	node[labs3, pos = .27] {4'640 $\pm$ 960}
+	|- (priv.west);
+\draw[flow3, line width = .1cm] ([shift={(0, 1.2)}]comp2.east) -- ++(4.5,0)
+	node[labs3, pos = .27] {18'100 $\pm$ 3'900}
+	|- (priv.west);
+\draw[flow3, line width = .05cm] ([shift={(0,-1.2)}]win2.east)  -- ++(4.5,0)
+	node[labs3, pos = .27] {550 $\pm$ 130}
+	|- (priv.west);
+\draw[flow3, line width = .05cm] ([shift={(0,-1.2)}]cod2.east)  -- ++(4.5,0)
+	node[labs3, pos = .27] {263 $\pm$ 54}
+	|- (priv.west);
+
+
+\end{tikzpicture}
+\end{document}

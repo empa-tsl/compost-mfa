@@ -1,0 +1,39 @@
+\documentclass{standalone}
+%\documentclass[11pt,hyperref={colorlinks=false,runcolor=blue}]{beamer}
+\usepackage{DejaVuSans} % Define font
+\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+%\usepackage{lmodern}
+\usepackage{tikz}
+\usetikzlibrary{backgrounds,fit,calc,shadows,chains,ocgx,shapes.geometric,arrows.meta,positioning}
+%\usepackage{microtype}
+\usepackage{url}
+%\usepackage{fancyvrb}
+%\usepackage{listings}
+\usepackage{pgfplots}
+
+\usetikzlibrary{decorations.text} % for text along curved paths
+
+
+\definecolor{mybrown}{RGB}{200,92,35}
+\definecolor{myolive}{RGB}{200,175,35}
+\definecolor{myleaf}{RGB}{143,200,35}
+\definecolor{mygreen}{RGB}{61,200,35}
+
+\definecolor{mypurple}{RGB}{200,35,162}
+\definecolor{mypink}{RGB}{200,35,79}
+\definecolor{myred}{RGB}{200,73,35}
+\definecolor{myorange}{RGB}{200,155,35}
+
+
+% USE readarray  TO GET THE DATA INTO A \def
+\usepackage{readarray}
+\readarraysepchar{;}
+
+\usepackage{etoolbox}
+
+% for too large figure margins because of bounding boxes around the tikz figure
+\usepackage{adjustbox}
+
+\begin{document}
+
